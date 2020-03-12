@@ -1,0 +1,3 @@
+rootProject.name='AndroidContactsManipulation'
+include ':app'
+include ':androidContactsManipulationModule'
