@@ -3,6 +3,7 @@ package com.instanect.androidContactsManipulationModule.api;
 import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.OperationApplicationException;
+import android.database.Cursor;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 
@@ -24,6 +25,32 @@ public class ContactsApi {
 
     ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
     int rawContactInsertIndex = ops.size();
+
+    public void getContacts() {
+
+        String[] projection = {ContactsContract.CommonDataKinds.Phone._ID,
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER};
+        Cursor cur = null;
+
+        try {
+            String startsWith = "Kunja";
+            cur = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    projection,
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                            + " like \"" + startsWith + "%\"", null,
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+
+            cur.moveToFirst();
+            String str = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+        int i=0;
+        i++;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void addContact(PhoneContactCompleteObject phoneContactCompleteObject) {
 
