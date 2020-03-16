@@ -1,4 +1,4 @@
-package com.instanect.androidContactsManipulationModule.structs.user
+package com.instanect.androidContactsManipulationModule.structs.accountType
 
 class PhoneContactAccountType {
 

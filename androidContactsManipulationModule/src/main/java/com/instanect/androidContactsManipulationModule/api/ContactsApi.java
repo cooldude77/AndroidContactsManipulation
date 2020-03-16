@@ -7,15 +7,18 @@ import android.database.Cursor;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 
-import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactAccountType;
-import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactCompleteObject;
+import androidx.annotation.NonNull;
+
+import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
+import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactNameData;
+import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
 
 import java.util.ArrayList;
 
 public class ContactsApi {
 
-    private Context context;
+    private final Context context;
 
     public ContactsApi(Context context) {
 
@@ -23,8 +26,8 @@ public class ContactsApi {
 
     }
 
-    ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
-    int rawContactInsertIndex = ops.size();
+    private final ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+    private final int rawContactInsertIndex = ops.size();
 
     public void getContacts() {
 
@@ -41,10 +44,12 @@ public class ContactsApi {
                             + " like \"" + startsWith + "%\"", null,
                     ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
 
-            cur.moveToFirst();
-            String str = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-        int i=0;
-        i++;
+            if (cur != null) {
+                cur.moveToFirst();
+                String str = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                cur.close();
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,12 +57,14 @@ public class ContactsApi {
 
     }
 
-    public void addContact(PhoneContactCompleteObject phoneContactCompleteObject) {
+    public void addContact(@NonNull PhoneContactCompleteObject phoneContactCompleteObject) {
 
         setAccountType(phoneContactCompleteObject.getPhoneContactAccountType());
         addNameData(phoneContactCompleteObject.getPhoneContactNameData());
+        addWorkData(phoneContactCompleteObject.getPhoneContactWorkData());
         apply();
     }
+
 
     private void apply() {
         try {
@@ -71,7 +78,7 @@ public class ContactsApi {
         }
     }
 
-    public void setAccountType(PhoneContactAccountType phoneContactAccountType) {
+    private void setAccountType(PhoneContactAccountType phoneContactAccountType) {
         ops.add(ContentProviderOperation
                 .newInsert(ContactsContract.RawContacts.CONTENT_URI)
                 .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE,
@@ -88,6 +95,24 @@ public class ContactsApi {
                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID,
                         rawContactInsertIndex);
         ops.add(getMappedNameEntity(builder, phoneContactNameData).build());
+    }
+
+    private void addWorkData(PhoneContactWorkData phoneContactWorkData) {
+        ContentProviderOperation.Builder builder = ContentProviderOperation
+                .newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID,
+                        rawContactInsertIndex);
+        ops.add(getMappedWorkEntity(builder, phoneContactWorkData).build());
+    }
+
+    private ContentProviderOperation.Builder getMappedWorkEntity(ContentProviderOperation.Builder builder, PhoneContactWorkData phoneContactWorkData) {
+
+        return builder.withValue(ContactsContract.Data.MIMETYPE,
+                ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Organization.COMPANY,
+                        phoneContactWorkData.getCompany())
+                .withValue(ContactsContract.CommonDataKinds.Organization.TITLE,
+                        phoneContactWorkData.getJobTitle());
     }
 
     private ContentProviderOperation.Builder getMappedNameEntity(
