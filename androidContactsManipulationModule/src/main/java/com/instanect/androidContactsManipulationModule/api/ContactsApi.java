@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
 import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
+import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
+import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactPhoneData;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactNameData;
 import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
 
@@ -62,8 +64,11 @@ public class ContactsApi {
         setAccountType(phoneContactCompleteObject.getPhoneContactAccountType());
         addNameData(phoneContactCompleteObject.getPhoneContactNameData());
         addWorkData(phoneContactCompleteObject.getPhoneContactWorkData());
+        addEmailData(phoneContactCompleteObject.getPhoneContactEmailDataList());
+        addPhoneData(phoneContactCompleteObject.getPhoneContactPhoneDataList());
         apply();
     }
+
 
 
     private void apply() {
@@ -132,6 +137,13 @@ public class ContactsApi {
                         phoneContactNameData.getLastName())
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.MIDDLE_NAME,
                         phoneContactNameData.getMiddleName());
+    }
+    private void addPhoneData(ArrayList<PhoneContactPhoneData> phoneContactPhoneDataList) {
+
+    }
+
+    private void addEmailData(ArrayList<PhoneContactEmailData> phoneContactEmailDataList) {
+
     }
 
 }
