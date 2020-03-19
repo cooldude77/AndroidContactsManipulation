@@ -70,7 +70,6 @@ public class ContactsApi {
     }
 
 
-
     private void apply() {
         try {
             context
@@ -138,12 +137,35 @@ public class ContactsApi {
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.MIDDLE_NAME,
                         phoneContactNameData.getMiddleName());
     }
+
     private void addPhoneData(ArrayList<PhoneContactPhoneData> phoneContactPhoneDataList) {
 
+        for (PhoneContactPhoneData phoneContactPhoneData : phoneContactPhoneDataList) {
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER,
+                            phoneContactPhoneData.getPhoneNumber())
+                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
+                            ContactsContract.CommonDataKinds.Phone.TYPE_WORK)
+                    .build());
+        }
     }
 
     private void addEmailData(ArrayList<PhoneContactEmailData> phoneContactEmailDataList) {
+        for (PhoneContactEmailData phoneContactEmailData : phoneContactEmailDataList) {
+
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Email.DATA,
+                            phoneContactEmailData.getEmail())
+                    .withValue(ContactsContract.CommonDataKinds.Email.TYPE,
+                            ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                    .build());
+        }
 
     }
-
 }
