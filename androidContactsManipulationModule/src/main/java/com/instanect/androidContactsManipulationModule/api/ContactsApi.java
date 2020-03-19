@@ -1,6 +1,7 @@
 package com.instanect.androidContactsManipulationModule.api;
 
 import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
@@ -28,8 +29,8 @@ public class ContactsApi {
 
     }
 
-    private final ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
-    private final int rawContactInsertIndex = ops.size();
+    private ArrayList<ContentProviderOperation> ops;
+    private int rawContactInsertIndex;
 
     public void getContacts() {
 
@@ -59,27 +60,37 @@ public class ContactsApi {
 
     }
 
-    public void addContact(@NonNull PhoneContactCompleteObject phoneContactCompleteObject) {
+    public ContentProviderResult[] addContact(@NonNull PhoneContactCompleteObject phoneContactCompleteObject) {
 
+
+        ops = new ArrayList<ContentProviderOperation>();
+        rawContactInsertIndex = ops.size();
+
+        // order is very important please don't change
         setAccountType(phoneContactCompleteObject.getPhoneContactAccountType());
+
         addNameData(phoneContactCompleteObject.getPhoneContactNameData());
         addWorkData(phoneContactCompleteObject.getPhoneContactWorkData());
+
         addEmailData(phoneContactCompleteObject.getPhoneContactEmailDataList());
         addPhoneData(phoneContactCompleteObject.getPhoneContactPhoneDataList());
-        apply();
+
+        return apply();
+
     }
 
 
-    private void apply() {
+    public ContentProviderResult[] apply() {
         try {
-            context
+            return context
                     .getContentResolver().
-                    applyBatch(ContactsContract.AUTHORITY, ops);
+                            applyBatch(ContactsContract.AUTHORITY, ops);
         } catch (RemoteException e) {
             // do s.th.
         } catch (OperationApplicationException e) {
             // do s.th.
         }
+        return new ContentProviderResult[0];
     }
 
     private void setAccountType(PhoneContactAccountType phoneContactAccountType) {
@@ -167,5 +178,14 @@ public class ContactsApi {
                     .build());
         }
 
+    }
+
+    public ArrayList<ContentProviderResult[]> addContact(ArrayList<PhoneContactCompleteObject> phoneContactCompleteObjects) {
+
+        ArrayList<ContentProviderResult[]> arrayList = new ArrayList<>();
+        for (PhoneContactCompleteObject phoneContactCompleteObject : phoneContactCompleteObjects)
+            arrayList.add(addContact(phoneContactCompleteObject));
+
+        return arrayList;
     }
 }

@@ -10,6 +10,6 @@ class PhoneContactCompleteObject {
     var phoneContactAccountType: PhoneContactAccountType? = null
     var phoneContactNameData: PhoneContactNameData? = null
     var phoneContactWorkData: PhoneContactWorkData? = null
-    var phoneContactPhoneDataList: ArrayList<PhoneContactPhoneData>? = null
-    var phoneContactEmailDataList: ArrayList<PhoneContactEmailData>? = null
+    var phoneContactPhoneDataList: ArrayList<PhoneContactPhoneData>? = ArrayList()
+    var phoneContactEmailDataList: ArrayList<PhoneContactEmailData>? = ArrayList()
 }

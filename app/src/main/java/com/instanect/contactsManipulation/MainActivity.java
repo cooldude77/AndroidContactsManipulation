@@ -1,6 +1,7 @@
 package com.instanect.contactsManipulation;
 
 import android.Manifest;
+import android.content.ContentProviderResult;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -92,6 +93,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void generateAndSave() {
+
+        PhoneContactCompleteObject p1 = generate();
+        PhoneContactCompleteObject p2 = generate();
+
+        ArrayList<PhoneContactCompleteObject> phoneContactCompleteObjects = new ArrayList<>();
+        phoneContactCompleteObjects.add(p1);
+        phoneContactCompleteObjects.add(p2);
+        ArrayList<ContentProviderResult[]> cp = contactsApi.addContact(phoneContactCompleteObjects);
+
+        Toast.makeText(this, "Contact with name :   added", Toast.LENGTH_LONG);
+    }
+
+    private PhoneContactCompleteObject generate() {
+
         DataFactory df = new DataFactory();
         PhoneContactAccountType phoneContactAccountType = new PhoneContactAccountType();
 
@@ -135,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
         phoneContactCompleteObject.setPhoneContactEmailDataList(phoneContactEmailDataArrayList);
         phoneContactCompleteObject.setPhoneContactPhoneDataList(phoneContactPhoneDataArrayList);
 
-
-        contactsApi.addContact(phoneContactCompleteObject);
-        Toast.makeText(this, "Contact with name : " + name + " added", Toast.LENGTH_LONG);
+        return phoneContactCompleteObject;
     }
 }
