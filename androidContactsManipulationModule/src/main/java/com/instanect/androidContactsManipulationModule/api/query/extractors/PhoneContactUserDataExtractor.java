@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.PhoneContactUserDataMapper;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactDataExtractorInterface;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
@@ -12,22 +13,17 @@ import com.instanect.androidContactsManipulationModule.structs.user.PhoneContact
 public class PhoneContactUserDataExtractor implements PhoneContactDataExtractorInterface {
 
 
-    private PhoneContactSegmentProvider phoneContactSegmentProvider;
+    private PhoneContactUserDataMapper phoneContactUserDataMapper;
     private ContentResolver contentResolver;
 
-    public PhoneContactUserDataExtractor(PhoneContactSegmentProvider phoneContactSegmentProvider,
+    public PhoneContactUserDataExtractor(PhoneContactUserDataMapper phoneContactUserDataMapper,
                                          ContentResolver contentResolver) {
 
-        this.phoneContactSegmentProvider = phoneContactSegmentProvider;
+        this.phoneContactUserDataMapper = phoneContactUserDataMapper;
         this.contentResolver = contentResolver;
     }
 
     public PhoneContactUserData extract(int rawId) {
-
-        PhoneContactUserData phoneContactUserData = (PhoneContactUserData) phoneContactSegmentProvider
-                .newInstance(
-                        PhoneContactUserData.class
-                );
 
 
     /*
@@ -66,50 +62,8 @@ public class PhoneContactUserDataExtractor implements PhoneContactDataExtractorI
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
 
-            phoneContactUserData.setId(
-                    cursor.getInt(cursor.getColumnIndex(
-                            ContactsContract.CommonDataKinds.StructuredName._ID))
+            return phoneContactUserDataMapper.map(cursor);
 
-            );
-            phoneContactUserData.setFirstName(
-                    cursor.getString(cursor.getColumnIndex(
-                            ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME))
-            );
-            phoneContactUserData.setLastName(
-                    cursor.getString(cursor.getColumnIndex(
-                            ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME)));
-            phoneContactUserData.setMiddleName(
-                    cursor.getString(cursor.getColumnIndex(
-                            ContactsContract.CommonDataKinds.StructuredName.MIDDLE_NAME))
-            );
-
-            phoneContactUserData.setSuffix(
-                    cursor.getString(cursor.getColumnIndex(
-                            ContactsContract.CommonDataKinds.StructuredName.SUFFIX))
-            );
-
-            phoneContactUserData.setPrefix(
-                    cursor.getString(cursor.getColumnIndex(
-                            ContactsContract.CommonDataKinds.StructuredName.PREFIX))
-            );
-
-
-            //  String uriString = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI));
-            //  boolean isStarred =
-
-            //        cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.STARRED)) == 1;
-
-//        phoneContactUserData.setName(name);
-            //      phoneContactUserData.setIdAndroid(Integer.parseInt(id));
-
-            // if (uriString != null) {
-            //        phoneContactUserData.setPhotoUri(Uri.parse(uriString));
-            //}
-            // phoneContactUserData.setStarred(isStarred);
-
-
-            cursor.close();
-            return phoneContactUserData;
         }
         return null;
     }

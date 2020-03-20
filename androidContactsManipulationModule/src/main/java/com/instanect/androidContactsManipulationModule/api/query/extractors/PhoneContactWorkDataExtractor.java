@@ -4,26 +4,24 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.PhoneContactWorkDataMapper;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactDataExtractorInterface;
-import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
 
 public class PhoneContactWorkDataExtractor implements PhoneContactDataExtractorInterface {
 
 
-    private PhoneContactSegmentProvider phoneContactSegmentProvider;
+    private PhoneContactWorkDataMapper phoneContactWorkDataMapper;
     private ContentResolver contentResolver;
 
-    public PhoneContactWorkDataExtractor(PhoneContactSegmentProvider phoneContactSegmentProvider,
+    public PhoneContactWorkDataExtractor(PhoneContactWorkDataMapper phoneContactWorkDataMapper,
                                          ContentResolver contentResolver) {
+        this.phoneContactWorkDataMapper = phoneContactWorkDataMapper;
 
-        this.phoneContactSegmentProvider = phoneContactSegmentProvider;
         this.contentResolver = contentResolver;
     }
 
     public PhoneContactWorkData extract(int rawId) {
-        PhoneContactWorkData phoneContactWorkData = (PhoneContactWorkData) phoneContactSegmentProvider
-                .newInstance(PhoneContactWorkData.class);
 
 
         // Get Organizations.........
@@ -38,25 +36,11 @@ public class PhoneContactWorkDataExtractor implements PhoneContactDataExtractorI
         if (cursor != null) {
             if (cursor.moveToFirst()) {
 
-                int idAndroid = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization._ID));
-                String orgName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.COMPANY));
-                String title = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.TITLE));
-                String department = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.DEPARTMENT));
-
-                phoneContactWorkData.setId(
-                        cursor.getInt(cursor.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Organization._ID))
-
-                );
-
-                phoneContactWorkData.setDepartment(department);
-                phoneContactWorkData.setCompany(orgName);
-                phoneContactWorkData.setJobTitle(title);
-
+                return phoneContactWorkDataMapper.map(cursor);
 
             }
             cursor.close();
         }
-        return phoneContactWorkData;
+        return null;
     }
 }
