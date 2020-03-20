@@ -27,7 +27,7 @@ public class PhoneContactPhoneDataExtractor implements PhoneContactArrayListData
         this.contentResolver = contentResolver;
     }
 
-    public ArrayList<PhoneContactPhoneData> extract(int id) {
+    public ArrayList<PhoneContactPhoneData> extract(int rawContactId) {
 
 
         ArrayList<PhoneContactPhoneData> phoneContactPhoneDataArrayList
@@ -35,8 +35,8 @@ public class PhoneContactPhoneDataExtractor implements PhoneContactArrayListData
 
         // get the phone number
         Cursor cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                new String[]{String.valueOf(id)}, null);
+                ContactsContract.CommonDataKinds.Phone.RAW_CONTACT_ID + " = ?",
+                new String[]{String.valueOf(rawContactId)}, null);
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -46,7 +46,7 @@ public class PhoneContactPhoneDataExtractor implements PhoneContactArrayListData
                 int phoneContactId = Integer.parseInt(cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID)));
 
-                phoneContactPhoneData.setIdAndroid(phoneContactId);
+             //   phoneContactPhoneData.setIdAndroid(phoneContactId);
                 phoneContactPhoneData.setPhoneNumber(cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
                 phoneContactPhoneData.setPhoneType(Integer.parseInt(cursor.getString(

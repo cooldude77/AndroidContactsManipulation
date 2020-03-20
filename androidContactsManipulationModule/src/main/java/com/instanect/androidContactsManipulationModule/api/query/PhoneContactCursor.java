@@ -12,10 +12,18 @@ public class PhoneContactCursor {
         this.contentResolver = contentResolver;
     }
 
-    public Cursor getCursor() {
+    public Cursor getCursor(int rawId) {
 
-        return contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null, null);
+        return
+                contentResolver.query(
+                        ContactsContract.RawContacts.CONTENT_URI,
+                        //       null, null,
+                        null,
+                        ContactsContract.RawContacts._ID + "=?",
+                        new String[]{String.valueOf(rawId)},
+                        null);
+//        return contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
+        //null, null, null, null);
 
     }
 

@@ -4,6 +4,7 @@ package com.instanect.androidContactsManipulationModule.api.query.extractors;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.instanect.androidContactsManipulationModule.api.query.PhoneContactObjectProvider;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorIntoArrayListProviderFactory;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorProviderFactory;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
@@ -47,21 +48,17 @@ public class PhoneContactExtractorMain {
                 phoneContactEmailDataExtractor.extract(contactId)
         );
 
-        if (Integer.parseInt(cursor.getString(cursor
-                .getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-
-            // phone
-            PhoneContactPhoneDataExtractor phoneContactPhoneDataExtractor
-                    = (PhoneContactPhoneDataExtractor)
-                    phoneContactExtractorIntoArrayListProviderFactory
-                            .getExtractor(PhoneContactPhoneDataExtractor.class);
+        // phone
+        PhoneContactPhoneDataExtractor phoneContactPhoneDataExtractor
+                = (PhoneContactPhoneDataExtractor)
+                phoneContactExtractorIntoArrayListProviderFactory
+                        .getExtractor(PhoneContactPhoneDataExtractor.class);
 
 
-            phoneContactCompleteObject.setPhoneContactPhoneDataList(
-                    phoneContactPhoneDataExtractor.extract(contactId)
-            );
+        phoneContactCompleteObject.setPhoneContactPhoneDataList(
+                phoneContactPhoneDataExtractor.extract(contactId)
+        );
 
-        }
 
         // web
         PhoneContactWebDataExtractor phoneContactWebDataExtractor

@@ -10,6 +10,7 @@ import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 
+import com.instanect.androidContactsManipulationModule.api.query.PhoneContactReader;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
 import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
@@ -22,11 +23,14 @@ import java.util.ArrayList;
 public class ContactsApi {
 
     private final Context context;
+    private PhoneContactReader phoneContactReader;
 
-    public ContactsApi(Context context) {
+    public ContactsApi(Context context,
+                       PhoneContactReader phoneContactReader) {
 
         this.context = context;
 
+        this.phoneContactReader = phoneContactReader;
     }
 
     private ArrayList<ContentProviderOperation> ops;
@@ -190,7 +194,11 @@ public class ContactsApi {
         return arrayList;
     }
 
-    public String query(int rawId) {
+    public PhoneContactCompleteObject query(int rawId) {
+
+      return   phoneContactReader.getComplete(rawId);
+
+        /*
         Cursor cursor = phoneContactCursor.getCursor(ContactsContract.Contacts._ID + "=?",
                 new String[]{String.valueOf(id)});
 
@@ -210,7 +218,7 @@ public class ContactsApi {
         return null;
 
 
-        /* Cursor cursor = context.getContentResolver().query(
+         Cursor cursor = context.getContentResolver().query(
                 ContactsContract.RawContacts.CONTENT_URI,
                 null, null,
 //                ContactsContract.Contacts._ID + "=?",new String[]{"628"},
@@ -231,9 +239,9 @@ public class ContactsApi {
 
         }
 
+    */
 
-        return null;
-        */
+
     }
 
     public void updatePhoneNameData(int rawId, PhoneContactUserData phoneContactUserData) {

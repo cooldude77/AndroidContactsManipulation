@@ -1,35 +1,30 @@
 package com.instanect.androidContactsManipulationModule.api.query;
 
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.provider.ContactsContract;
 
 import com.instanect.androidContactsManipulationModule.api.query.extractors.PhoneContactExtractorMain;
+import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
 
-public class PhoneContactReader extends AsyncTask<Integer, Void, Void> {
+public class PhoneContactReader {
 
 
     private PhoneContactCursor phoneContactCursor;
-    private PhoneContactAndroidObject phoneContactAndroidObject;
     private PhoneContactExtractorMain phoneContactExtractorMain;
-    private PhoneContactSingleReaderReadingProgressInterface phoneContactSingleReaderReadingProgressInterface;
 
     public PhoneContactReader(
             PhoneContactCursor phoneContactCursor,
-            PhoneContactExtractorMain phoneContactExtractorMain,
-            PhoneContactSingleReaderReadingProgressInterface
-                    phoneContactSingleReaderReadingProgressInterface) {
+            PhoneContactExtractorMain phoneContactExtractorMain
+    ) {
         this.phoneContactCursor = phoneContactCursor;
         this.phoneContactExtractorMain = phoneContactExtractorMain;
-        this.phoneContactSingleReaderReadingProgressInterface = phoneContactSingleReaderReadingProgressInterface;
     }
 
-    @Override
-    protected Void doInBackground(Integer... integers) {
+    public PhoneContactCompleteObject getComplete(int rawId) {
 
-        int id = integers[0];
-        Cursor cursor = phoneContactCursor.getCursor(ContactsContract.Contacts._ID + "=?",
-                new String[]{String.valueOf(id)});
+
+      Cursor cursor = phoneContactCursor.getCursor(rawId);
+
 
         // do nor delete
         //contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
@@ -40,16 +35,10 @@ public class PhoneContactReader extends AsyncTask<Integer, Void, Void> {
         if (cursor != null && cursor.getCount() > 0) {
 
             cursor.moveToFirst();
-            phoneContactAndroidObject
-                    = phoneContactExtractorMain.getPhoneContactObject(cursor);
+            return phoneContactExtractorMain.getPhoneContactObject(cursor);
 
         }
         return null;
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        phoneContactSingleReaderReadingProgressInterface.isComplete(phoneContactAndroidObject);
-    }
 }

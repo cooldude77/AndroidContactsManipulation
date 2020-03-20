@@ -28,7 +28,7 @@ public class PhoneContactEmailDataExtractor implements PhoneContactArrayListData
         this.contentResolver = contentResolver;
     }
 
-    public ArrayList<PhoneContactEmailData> extract(int id) {
+    public ArrayList<PhoneContactEmailData> extract(int rawContactId) {
 
         ArrayList<PhoneContactEmailData> phoneContactEmailDataArrayList
                 = phoneContactArrayListSegmentProvider.newInstance(PhoneContactEmailData.class);
@@ -37,11 +37,12 @@ public class PhoneContactEmailDataExtractor implements PhoneContactArrayListData
         Cursor cursor = contentResolver.query(
                 ContactsContract.CommonDataKinds.Email.CONTENT_URI,
                 null,
-                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
-                new String[]{String.valueOf(id)}, null);
+                ContactsContract.CommonDataKinds.Email.RAW_CONTACT_ID + " = ?",
+                new String[]{String.valueOf(rawContactId)}, null);
 
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
                 PhoneContactEmailData phoneContactEmailData =
                         (PhoneContactEmailData)
                                 phoneContactSegmentProvider.newInstance(PhoneContactEmailData.class);
@@ -61,7 +62,7 @@ public class PhoneContactEmailDataExtractor implements PhoneContactArrayListData
                 phoneContactEmailData.setEmailType(emailType);
 
                 phoneContactEmailDataArrayList.add(phoneContactEmailData);
-            }
+            } while (cursor.moveToNext());
             cursor.close();
         }
         return phoneContactEmailDataArrayList;

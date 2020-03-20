@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.instanect.androidContactsManipulationModule.api.ContactsApi;
+import com.instanect.androidContactsManipulationModule.api.ContactsApiProvider;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
 import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        contactsApi = new ContactsApi(this);
+        contactsApi = new ContactsApiProvider().newInstance(this);
 
         MainActivityPermissionsDispatcher.showCameraWithPermissionCheck(this);
     }
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS})
     void showCamera() {
         // insertOps();
-        String name = contactsApi.query(628);
+        PhoneContactCompleteObject name = contactsApi.query(628);
     }
 
 
