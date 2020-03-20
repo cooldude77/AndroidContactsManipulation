@@ -11,6 +11,8 @@ import com.instanect.androidContactsManipulationModule.api.query.extractors.prov
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
 import com.instanect.androidContactsManipulationModule.structs.notes.PhoneContactNoteData;
 
+import java.util.ArrayList;
+
 public class PhoneContactNoteDataExtractor implements PhoneContactArrayListDataExtractorInterface {
 
 
