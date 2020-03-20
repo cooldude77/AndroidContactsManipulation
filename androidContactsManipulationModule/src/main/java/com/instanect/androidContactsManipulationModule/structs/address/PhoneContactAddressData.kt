@@ -1,6 +1,9 @@
 package com.instanect.androidContactsManipulationModule.structs.address
 
-class PhoneContactAddressData  {
+import com.instanect.androidContactsManipulationModule.api.query.interfaces.PhoneContactSegmentInterface
+
+class PhoneContactAddressData : PhoneContactSegmentInterface {
+    var region: String? = null
     var idPhoneAddressData: Int = -1
     var idAndroid: Int = 0
     var city: String? = null

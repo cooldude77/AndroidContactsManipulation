@@ -1,9 +1,13 @@
 package com.instanect.androidContactsManipulationModule.api.query.extractors;
 
 
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactArrayListDataExtractorInterface;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactArrayListSegmentProvider;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 import com.instanect.androidContactsManipulationModule.structs.address.PhoneContactAddressData;
 
 import java.util.ArrayList;

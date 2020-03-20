@@ -2,9 +2,9 @@ package com.instanect.androidContactsManipulationModule.api.query.extractors.fac
 
 import android.content.ContentResolver;
 
-import com.instanect.mainapp.features.connections.phone.contacts.common.reader.businessObject.segments.provider.PhoneContactArrayListSegmentProvider;
-import com.instanect.mainapp.features.connections.phone.contacts.common.reader.businessObject.segments.provider.PhoneContactSegmentProvider;
-import com.instanect.mainapp.features.connections.phone.contacts.common.reader.reader.extractors.interfaces.PhoneContactArrayListDataExtractorInterface;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactArrayListDataExtractorInterface;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactArrayListSegmentProvider;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 
 public class PhoneContactExtractorIntoArrayListProviderFactory {
 

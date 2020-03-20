@@ -7,6 +7,9 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 
 import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactDataExtractorInterface;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
+import com.instanect.androidContactsManipulationModule.api.query.interfaces.PhoneContactSegmentInterface;
+import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
 
 public class PhoneContactUserDataExtractor implements PhoneContactDataExtractorInterface {
 

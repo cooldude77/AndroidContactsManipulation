@@ -7,7 +7,6 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -15,7 +14,7 @@ import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompl
 import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactPhoneData;
-import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactNameData;
+import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
 import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
 
 import java.util.ArrayList;
@@ -106,12 +105,12 @@ public class ContactsApi {
 
     }
 
-    private void addNameData(PhoneContactNameData phoneContactNameData) {
+    private void addNameData(PhoneContactUserData phoneContactUserData) {
         ContentProviderOperation.Builder builder = ContentProviderOperation
                 .newInsert(ContactsContract.Data.CONTENT_URI)
                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID,
                         rawContactInsertIndex);
-        ops.add(getMappedNameEntity(builder, phoneContactNameData).build());
+        ops.add(getMappedNameEntity(builder, phoneContactUserData).build());
     }
 
     private void addWorkData(PhoneContactWorkData phoneContactWorkData) {
@@ -134,21 +133,21 @@ public class ContactsApi {
 
     private ContentProviderOperation.Builder getMappedNameEntity(
             ContentProviderOperation.Builder builder,
-            PhoneContactNameData phoneContactNameData) {
+            PhoneContactUserData phoneContactUserData) {
         return builder.withValue(ContactsContract.Data.MIMETYPE,
                 ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME,
-                        phoneContactNameData.getDisplayName())
+                        phoneContactUserData.getDisplayName())
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME,
-                        phoneContactNameData.getFirstName())
+                        phoneContactUserData.getFirstName())
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.SUFFIX,
-                        phoneContactNameData.getSuffix())
+                        phoneContactUserData.getSuffix())
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.PREFIX,
-                        phoneContactNameData.getPrefix())
+                        phoneContactUserData.getPrefix())
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME,
-                        phoneContactNameData.getLastName())
+                        phoneContactUserData.getLastName())
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.MIDDLE_NAME,
-                        phoneContactNameData.getMiddleName());
+                        phoneContactUserData.getMiddleName());
     }
 
     private void addPhoneData(ArrayList<PhoneContactPhoneData> phoneContactPhoneDataList) {
@@ -237,7 +236,7 @@ public class ContactsApi {
         */
     }
 
-    public void updatePhoneNameData(int rawId, PhoneContactNameData phoneContactNameData) {
+    public void updatePhoneNameData(int rawId, PhoneContactUserData phoneContactUserData) {
 
 
     }

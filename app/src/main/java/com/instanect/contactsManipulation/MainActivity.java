@@ -17,7 +17,7 @@ import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompl
 import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactPhoneData;
-import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactNameData;
+import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
 import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
 
 import org.fluttercode.datafactory.impl.DataFactory;
@@ -114,11 +114,11 @@ public class MainActivity extends AppCompatActivity {
         phoneContactAccountType.setAccountType("instanect.com");
 
 
-        PhoneContactNameData phoneContactNameData = new PhoneContactNameData();
+        PhoneContactUserData phoneContactUserData = new PhoneContactUserData();
         String name = "Test " + df.getFirstName();
-        phoneContactNameData.setFirstName(name);
+        phoneContactUserData.setFirstName(name);
         Log.d("Phone Contact", "Generated First name: " + name);
-        phoneContactNameData.setLastName(df.getLastName());
+        phoneContactUserData.setLastName(df.getLastName());
 
         PhoneContactWorkData phoneContactWorkData = new PhoneContactWorkData();
         phoneContactWorkData.setCompany("My Org");
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
         PhoneContactCompleteObject phoneContactCompleteObject = new PhoneContactCompleteObject();
         phoneContactCompleteObject.setPhoneContactAccountType(phoneContactAccountType);
-        phoneContactCompleteObject.setPhoneContactNameData(phoneContactNameData);
+        phoneContactCompleteObject.setPhoneContactNameData(phoneContactUserData);
         phoneContactCompleteObject.setPhoneContactWorkData(phoneContactWorkData);
         phoneContactCompleteObject.setPhoneContactEmailDataList(phoneContactEmailDataArrayList);
         phoneContactCompleteObject.setPhoneContactPhoneDataList(phoneContactPhoneDataArrayList);

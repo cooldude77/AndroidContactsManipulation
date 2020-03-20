@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 
 import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactDataExtractorInterface;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
+import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
 
 public class PhoneContactProfileDataExtractor implements PhoneContactDataExtractorInterface {
 
@@ -19,9 +21,9 @@ public class PhoneContactProfileDataExtractor implements PhoneContactDataExtract
         this.contentResolver = contentResolver;
     }
 
-    public PhoneContactProfileData extract(int id) {
-        PhoneContactProfileData phoneContactProfileData = (PhoneContactProfileData) phoneContactSegmentProvider
-                .newInstance(PhoneContactProfileData.class);
+    public PhoneContactWorkData extract(int id) {
+        PhoneContactWorkData phoneContactProfileData = (PhoneContactWorkData) phoneContactSegmentProvider
+                .newInstance(PhoneContactWorkData.class);
 
 
         // Get Organizations.........
@@ -40,10 +42,9 @@ public class PhoneContactProfileDataExtractor implements PhoneContactDataExtract
                 String department = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.DEPARTMENT));
 
 
-                phoneContactProfileData.setIdAndroid(idAndroid);
                 phoneContactProfileData.setDepartment(department);
                 phoneContactProfileData.setCompany(orgName);
-                phoneContactProfileData.setDesignation(title);
+                phoneContactProfileData.setJobTitle(title);
 
 
             }

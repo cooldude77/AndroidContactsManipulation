@@ -4,6 +4,7 @@ package com.instanect.androidContactsManipulationModule.api.query.extractors.fac
 import android.content.ContentResolver;
 
 import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactDataExtractorInterface;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 
 public class PhoneContactExtractorProviderFactory {
 

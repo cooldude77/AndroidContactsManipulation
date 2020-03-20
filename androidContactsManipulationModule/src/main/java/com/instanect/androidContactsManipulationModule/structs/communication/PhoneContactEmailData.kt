@@ -1,6 +1,8 @@
 package com.instanect.androidContactsManipulationModule.structs.communication
 
-class PhoneContactEmailData {
+import com.instanect.androidContactsManipulationModule.api.query.interfaces.PhoneContactSegmentInterface
+
+class PhoneContactEmailData : PhoneContactSegmentInterface {
 
     var idAndroid: Int = 0
     var email: String? = null

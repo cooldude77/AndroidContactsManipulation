@@ -5,6 +5,12 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactArrayListDataExtractorInterface;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactArrayListSegmentProvider;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
+import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
+import com.instanect.androidContactsManipulationModule.structs.notes.PhoneContactNoteData;
+
 public class PhoneContactNoteDataExtractor implements PhoneContactArrayListDataExtractorInterface {
 
 

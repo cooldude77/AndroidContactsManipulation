@@ -2,8 +2,9 @@ package com.instanect.androidContactsManipulationModule.structs.user
 
 
 import android.net.Uri
+import com.instanect.androidContactsManipulationModule.api.query.interfaces.PhoneContactSegmentInterface
 
-class PhoneContactNameData {
+class PhoneContactUserData : PhoneContactSegmentInterface {
 
     var displayName: String? = null
     var firstName: String? = null
