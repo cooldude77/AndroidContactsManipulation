@@ -5,9 +5,8 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.PhoneContactEmailMapper;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactArrayListDataExtractorInterface;
-import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactArrayListSegmentProvider;
-import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
 
 import java.util.ArrayList;
@@ -15,23 +14,18 @@ import java.util.ArrayList;
 public class PhoneContactEmailDataExtractor implements PhoneContactArrayListDataExtractorInterface {
 
 
-    private PhoneContactSegmentProvider phoneContactSegmentProvider;
-    private PhoneContactArrayListSegmentProvider phoneContactArrayListSegmentProvider;
+    private PhoneContactEmailMapper phoneContactEmailMapper;
     private ContentResolver contentResolver;
 
     public PhoneContactEmailDataExtractor(
-            PhoneContactSegmentProvider phoneContactSegmentProvider,
-            PhoneContactArrayListSegmentProvider phoneContactArrayListSegmentProvider,
+            PhoneContactEmailMapper phoneContactEmailMapper,
             ContentResolver contentResolver) {
-        this.phoneContactSegmentProvider = phoneContactSegmentProvider;
-        this.phoneContactArrayListSegmentProvider = phoneContactArrayListSegmentProvider;
+        this.phoneContactEmailMapper = phoneContactEmailMapper;
         this.contentResolver = contentResolver;
     }
 
     public ArrayList<PhoneContactEmailData> extract(int rawContactId) {
 
-        ArrayList<PhoneContactEmailData> phoneContactEmailDataArrayList
-                = phoneContactArrayListSegmentProvider.newInstance(PhoneContactEmailData.class);
 
         // get email and type
         Cursor cursor = contentResolver.query(
@@ -40,31 +34,6 @@ public class PhoneContactEmailDataExtractor implements PhoneContactArrayListData
                 ContactsContract.CommonDataKinds.Email.RAW_CONTACT_ID + " = ?",
                 new String[]{String.valueOf(rawContactId)}, null);
 
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                PhoneContactEmailData phoneContactEmailData =
-                        (PhoneContactEmailData)
-                                phoneContactSegmentProvider.newInstance(PhoneContactEmailData.class);
-                // This would allow you get several email addresses
-                // if the email addresses were stored in an array
-
-                int emailRawId = Integer.parseInt(cursor.getString(
-                        cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email._ID)));
-
-                String email = cursor.getString(
-                        cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                int emailType = Integer.parseInt(cursor.getString(
-                        cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE)));
-
-                phoneContactEmailData.setId(emailRawId);
-                phoneContactEmailData.setEmail(email);
-                phoneContactEmailData.setEmailType(emailType);
-
-                phoneContactEmailDataArrayList.add(phoneContactEmailData);
-            } while (cursor.moveToNext());
-            cursor.close();
-        }
-        return phoneContactEmailDataArrayList;
+        return phoneContactEmailMapper.map(cursor);
     }
 }
