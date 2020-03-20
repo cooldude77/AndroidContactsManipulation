@@ -192,7 +192,26 @@ public class ContactsApi {
     }
 
     public String query(int rawId) {
-        Cursor cursor = context.getContentResolver().query(
+        Cursor cursor = phoneContactCursor.getCursor(ContactsContract.Contacts._ID + "=?",
+                new String[]{String.valueOf(id)});
+
+        // do nor delete
+        //contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
+        //              null, ContactsContract.Contacts.DISPLAY_NAME+" like ?",
+        //            new String[]{"%deep krishna%"}, null);
+
+
+        if (cursor != null && cursor.getCount() > 0) {
+
+            cursor.moveToFirst();
+            phoneContactAndroidObject
+                    = phoneContactExtractorMain.getPhoneContactObject(cursor);
+
+        }
+        return null;
+
+
+        /* Cursor cursor = context.getContentResolver().query(
                 ContactsContract.RawContacts.CONTENT_URI,
                 null, null,
 //                ContactsContract.Contacts._ID + "=?",new String[]{"628"},
@@ -215,6 +234,7 @@ public class ContactsApi {
 
 
         return null;
+        */
     }
 
     public void updatePhoneNameData(int rawId, PhoneContactNameData phoneContactNameData) {
