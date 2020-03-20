@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS})
     void showCamera() {
         // insertOps();
-        contactsApi.getContacts();
+        String name = contactsApi.query(628);
     }
 
 

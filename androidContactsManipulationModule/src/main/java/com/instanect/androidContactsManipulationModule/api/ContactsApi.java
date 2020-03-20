@@ -7,6 +7,7 @@ import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -59,6 +60,7 @@ public class ContactsApi {
         }
 
     }
+
 
     public ContentProviderResult[] addContact(@NonNull PhoneContactCompleteObject phoneContactCompleteObject) {
 
@@ -188,4 +190,36 @@ public class ContactsApi {
 
         return arrayList;
     }
+
+    public String query(int rawId) {
+        Cursor cursor = context.getContentResolver().query(
+                ContactsContract.RawContacts.CONTENT_URI,
+                null, null,
+//                ContactsContract.Contacts._ID + "=?",new String[]{"628"},
+                null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+                String str = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                String raw_id = cursor.getString(cursor.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID));
+
+                Log.d("TAG", str + ":" + id + " raw:" + raw_id);
+            } while (cursor.moveToNext());
+            cursor.close();
+            return null;
+
+        }
+
+
+        return null;
+    }
+
+    public void updatePhoneNameData(int rawId, PhoneContactNameData phoneContactNameData) {
+
+
+    }
+
 }
