@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import com.instanect.androidContactsManipulationModule.api.insert.PhoneContactInsert;
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactReader;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
+import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
+import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
 
 import java.util.ArrayList;
 
@@ -50,5 +52,12 @@ public class ContactsApi {
 
     public ArrayList<ContentProviderResult[]> addContact(ArrayList<PhoneContactCompleteObject> phoneContactCompleteObjects) {
         return phoneContactInsert.addContactMultiple(phoneContactCompleteObjects);
+    }
+
+    public ArrayList<PhoneContactUserData> getOnlyUserDataForAllContactsByAccountName(
+            PhoneContactAccountType phoneContactAccountType
+    ) {
+
+        return phoneContactReader.getAllUserDataForAccount(phoneContactAccountType);
     }
 }

@@ -30,7 +30,8 @@ public class ContactsApiProvider {
                                         new PhoneContactArrayListSegmentProvider(),
                                         context.getContentResolver()
                                 )
-                        )
+                        ),
+                        context
                 ),
                 new PhoneContactInsert(context)
         );

@@ -50,7 +50,13 @@ public class MainActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS})
     void showCamera() {
         // insertOps();
-        PhoneContactCompleteObject name = contactsApi.getComplete(628);
+//        PhoneContactCompleteObject name = contactsApi.getComplete(628);
+
+
+        PhoneContactAccountType phoneContactAccountType = new PhoneContactAccountType();
+        phoneContactAccountType.setAccountType("instanect.com");
+        phoneContactAccountType.setAccountName("test");
+        contactsApi.getOnlyUserDataForAllContactsByAccountName(phoneContactAccountType);
     }
 
 
