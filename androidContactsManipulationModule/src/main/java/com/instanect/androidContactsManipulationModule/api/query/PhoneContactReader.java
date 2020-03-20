@@ -1,7 +1,6 @@
 package com.instanect.androidContactsManipulationModule.api.query;
 
 import android.database.Cursor;
-import android.provider.ContactsContract;
 
 import com.instanect.androidContactsManipulationModule.api.query.extractors.PhoneContactExtractorMain;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
@@ -23,7 +22,7 @@ public class PhoneContactReader {
     public PhoneContactCompleteObject getComplete(int rawId) {
 
 
-      Cursor cursor = phoneContactCursor.getCursor(rawId);
+        Cursor cursor = phoneContactCursor.getCursor(rawId);
 
 
         // do nor delete

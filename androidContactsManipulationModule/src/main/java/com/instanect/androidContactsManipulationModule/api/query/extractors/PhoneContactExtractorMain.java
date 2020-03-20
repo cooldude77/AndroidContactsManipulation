@@ -9,6 +9,7 @@ import com.instanect.androidContactsManipulationModule.api.query.extractors.fact
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorProviderFactory;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
+import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
 
 public class PhoneContactExtractorMain {
 
@@ -27,16 +28,24 @@ public class PhoneContactExtractorMain {
 
         PhoneContactCompleteObject phoneContactCompleteObject = phoneContactObjectProvider.newInstance();
 
+        int rawId = Integer.parseInt(cursor
+                .getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
+
+        // name and others
         PhoneContactUserDataExtractor phoneContactUserDataExtractor
                 = (PhoneContactUserDataExtractor) phoneContactExtractorProviderFactory.getExtractor(PhoneContactUserDataExtractor.class);
 
-        PhoneContactUserData phoneContactUserData = phoneContactUserDataExtractor.extract(cursor);
+        PhoneContactUserData phoneContactUserData = phoneContactUserDataExtractor.extract(rawId);
 
         phoneContactCompleteObject.setPhoneContactNameData(phoneContactUserData);
 
+        // work
+        PhoneContactWorkDataExtractor phoneContactWorkDataExtractor
+                = (PhoneContactWorkDataExtractor) phoneContactExtractorProviderFactory.getExtractor(PhoneContactWorkDataExtractor.class);
 
-        int contactId = Integer.parseInt(cursor
-                .getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
+        PhoneContactWorkData phoneContactWorkData = phoneContactWorkDataExtractor.extract(rawId);
+
+        phoneContactCompleteObject.setPhoneContactWorkData(phoneContactWorkData);
 
         // email
         PhoneContactEmailDataExtractor phoneContactEmailDataExtractor
@@ -45,7 +54,7 @@ public class PhoneContactExtractorMain {
                         .getExtractor(PhoneContactEmailDataExtractor.class);
 
         phoneContactCompleteObject.setPhoneContactEmailDataList(
-                phoneContactEmailDataExtractor.extract(contactId)
+                phoneContactEmailDataExtractor.extract(rawId)
         );
 
         // phone
@@ -56,7 +65,7 @@ public class PhoneContactExtractorMain {
 
 
         phoneContactCompleteObject.setPhoneContactPhoneDataList(
-                phoneContactPhoneDataExtractor.extract(contactId)
+                phoneContactPhoneDataExtractor.extract(rawId)
         );
 
 
@@ -67,7 +76,7 @@ public class PhoneContactExtractorMain {
                         .getExtractor(PhoneContactWebDataExtractor.class);
 
         phoneContactCompleteObject.setPhoneContactWebDataList(
-                phoneContactWebDataExtractor.extract(contactId)
+                phoneContactWebDataExtractor.extract(rawId)
         );
 
                     /*
@@ -95,7 +104,7 @@ public class PhoneContactExtractorMain {
                         .getExtractor(PhoneContactNoteDataExtractor.class);
 
         phoneContactCompleteObject.setPhoneContactNoteDataList(
-                phoneContactNoteDataExtractor.extract(contactId)
+                phoneContactNoteDataExtractor.extract(rawId)
         );
 
         // address
@@ -106,7 +115,7 @@ public class PhoneContactExtractorMain {
 
 
         phoneContactCompleteObject.setPhoneContactAddressDataList(
-                phoneContactAddressDataExtractor.extract(contactId)
+                phoneContactAddressDataExtractor.extract(rawId)
         );
 
 
