@@ -49,7 +49,7 @@ public class PhoneContactEmailDataExtractor implements PhoneContactArrayListData
                 // This would allow you get several email addresses
                 // if the email addresses were stored in an array
 
-                int emailContactId = Integer.parseInt(cursor.getString(
+                int emailRawId = Integer.parseInt(cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email._ID)));
 
                 String email = cursor.getString(
@@ -57,7 +57,7 @@ public class PhoneContactEmailDataExtractor implements PhoneContactArrayListData
                 int emailType = Integer.parseInt(cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE)));
 
-                phoneContactEmailData.setIdAndroid(emailContactId);
+                phoneContactEmailData.setId(emailRawId);
                 phoneContactEmailData.setEmail(email);
                 phoneContactEmailData.setEmailType(emailType);
 

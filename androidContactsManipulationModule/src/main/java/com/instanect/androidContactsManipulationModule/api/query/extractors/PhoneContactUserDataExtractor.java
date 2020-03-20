@@ -66,6 +66,11 @@ public class PhoneContactUserDataExtractor implements PhoneContactDataExtractorI
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
 
+            phoneContactUserData.setId(
+                    cursor.getInt(cursor.getColumnIndex(
+                            ContactsContract.CommonDataKinds.StructuredName._ID))
+
+            );
             phoneContactUserData.setFirstName(
                     cursor.getString(cursor.getColumnIndex(
                             ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME))

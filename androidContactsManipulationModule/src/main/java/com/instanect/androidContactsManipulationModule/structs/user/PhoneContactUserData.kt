@@ -12,6 +12,6 @@ class PhoneContactUserData : PhoneContactSegmentInterface {
     var lastName: String? = null
     var prefix: String? = null
     var suffix: String? = null
-    var idPhoneNameData = -1
+    var id = -1
 
 }

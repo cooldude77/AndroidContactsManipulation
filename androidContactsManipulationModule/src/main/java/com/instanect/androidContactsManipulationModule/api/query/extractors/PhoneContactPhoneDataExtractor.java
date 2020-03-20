@@ -46,6 +46,7 @@ public class PhoneContactPhoneDataExtractor implements PhoneContactArrayListData
                 int phoneContactId = Integer.parseInt(cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID)));
 
+               phoneContactPhoneData.setIdRaw(phoneContactId);
              //   phoneContactPhoneData.setIdAndroid(phoneContactId);
                 phoneContactPhoneData.setPhoneNumber(cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));

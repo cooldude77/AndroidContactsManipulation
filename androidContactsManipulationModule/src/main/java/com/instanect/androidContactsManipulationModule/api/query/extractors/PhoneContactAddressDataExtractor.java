@@ -64,7 +64,7 @@ public class PhoneContactAddressDataExtractor implements PhoneContactArrayListDa
                 String type = cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.TYPE));
 
-                phoneContactAddressData.setIdAndroid(addressContactId);
+                phoneContactAddressData.setId(addressContactId);
                 phoneContactAddressData.setPostalCode(postalCode);
                 phoneContactAddressData.setPoBox(poBox);
                 phoneContactAddressData.setCountry(country);

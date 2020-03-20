@@ -43,6 +43,11 @@ public class PhoneContactWorkDataExtractor implements PhoneContactDataExtractorI
                 String title = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.TITLE));
                 String department = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.DEPARTMENT));
 
+                phoneContactWorkData.setId(
+                        cursor.getInt(cursor.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Organization._ID))
+
+                );
 
                 phoneContactWorkData.setDepartment(department);
                 phoneContactWorkData.setCompany(orgName);

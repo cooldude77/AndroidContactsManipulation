@@ -5,8 +5,8 @@ import com.instanect.androidContactsManipulationModule.api.query.interfaces.Phon
 
 class PhoneContactWorkData : PhoneContactSegmentInterface {
 
+    var id: Int = -1;
     var department: String? = null
-    var idPhoneWorkData = -1
     var company: String? = null
     var jobTitle: String? = null
 }

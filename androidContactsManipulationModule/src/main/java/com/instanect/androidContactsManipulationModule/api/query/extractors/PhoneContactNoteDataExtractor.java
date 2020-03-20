@@ -51,7 +51,7 @@ public class PhoneContactNoteDataExtractor implements PhoneContactArrayListDataE
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Note._ID)));
                 String note = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Note.NOTE));
 
-                phoneContactNoteData.setIdAndroid(noteId);
+                phoneContactNoteData.setId(noteId);
                 phoneContactNoteData.setNote(note);
                 phoneContactNoteDataArrayList.add(phoneContactNoteData);
 
