@@ -2,6 +2,7 @@ package com.instanect.androidContactsManipulationModule.api;
 
 import android.content.Context;
 
+import com.instanect.androidContactsManipulationModule.api.insert.PhoneContactInsert;
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactCursor;
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactObjectProvider;
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactReader;
@@ -30,7 +31,8 @@ public class ContactsApiProvider {
                                         context.getContentResolver()
                                 )
                         )
-                )
+                ),
+                new PhoneContactInsert(context)
         );
     }
 }

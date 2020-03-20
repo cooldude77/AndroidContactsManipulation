@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS})
     void showCamera() {
         // insertOps();
-        PhoneContactCompleteObject name = contactsApi.query(628);
+        PhoneContactCompleteObject name = contactsApi.getComplete(628);
     }
 
 
