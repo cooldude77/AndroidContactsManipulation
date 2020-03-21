@@ -1,12 +1,14 @@
-package com.instanect.androidContactsManipulationModule.api.query.cursorMappers;
+package com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper;
 
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.interfaces.PhoneContactMapperInterface;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
+import com.instanect.androidContactsManipulationModule.api.query.interfaces.PhoneContactSegmentInterface;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
 
-public class PhoneContactUserDataMapper {
+public class PhoneContactUserDataMapper implements PhoneContactMapperInterface {
     private PhoneContactSegmentProvider phoneContactSegmentProvider;
 
     public PhoneContactUserDataMapper(PhoneContactSegmentProvider phoneContactSegmentProvider) {
@@ -62,4 +64,5 @@ public class PhoneContactUserDataMapper {
         return phoneContactUserData;
 
     }
+
 }

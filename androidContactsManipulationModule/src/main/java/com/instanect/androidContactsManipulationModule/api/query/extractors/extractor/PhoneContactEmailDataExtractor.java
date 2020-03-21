@@ -1,11 +1,11 @@
-package com.instanect.androidContactsManipulationModule.api.query.extractors;
+package com.instanect.androidContactsManipulationModule.api.query.extractors.extractor;
 
 
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
-import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.PhoneContactEmailMapper;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper.PhoneContactEmailMapper;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactArrayListDataExtractorInterface;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
 

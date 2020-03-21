@@ -1,15 +1,17 @@
-package com.instanect.androidContactsManipulationModule.api.query.cursorMappers;
+package com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper;
 
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.interfaces.PhoneContactMapperArrayListInterface;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.interfaces.PhoneContactMapperInterface;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactArrayListSegmentProvider;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactPhoneData;
 
 import java.util.ArrayList;
 
-public class PhoneContactPhoneMapper {
+public class PhoneContactPhoneMapper implements PhoneContactMapperArrayListInterface {
     private PhoneContactSegmentProvider phoneContactSegmentProvider;
     private PhoneContactArrayListSegmentProvider phoneContactArrayListSegmentProvider;
 

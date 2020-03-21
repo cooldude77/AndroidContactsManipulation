@@ -1,10 +1,24 @@
-package com.instanect.androidContactsManipulationModule.api.query.extractors;
+package com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.main;
 
 
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactObjectProvider;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper.PhoneContactAddressMapper;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper.PhoneContactEmailMapper;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper.PhoneContactNoteMapper;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper.PhoneContactPhoneMapper;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper.PhoneContactUserDataMapper;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper.PhoneContactWebMapper;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper.PhoneContactWorkDataMapper;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.PhoneContactAddressDataExtractor;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.PhoneContactEmailDataExtractor;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.PhoneContactNoteDataExtractor;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.PhoneContactPhoneDataExtractor;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.PhoneContactUserDataExtractor;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.PhoneContactWebDataExtractor;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.PhoneContactWorkDataExtractor;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorIntoArrayListProviderFactory;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorProviderFactory;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
@@ -33,7 +47,8 @@ public class PhoneContactExtractorMain {
 
         // name and others
         PhoneContactUserDataExtractor phoneContactUserDataExtractor
-                = (PhoneContactUserDataExtractor) phoneContactExtractorProviderFactory.getExtractor(PhoneContactUserDataExtractor.class);
+                = (PhoneContactUserDataExtractor) phoneContactExtractorProviderFactory
+                .getExtractor(PhoneContactUserDataExtractor.class, PhoneContactUserDataMapper.class);
 
         PhoneContactUserData phoneContactUserData = phoneContactUserDataExtractor.extract(rawId);
 
@@ -41,7 +56,8 @@ public class PhoneContactExtractorMain {
 
         // work
         PhoneContactWorkDataExtractor phoneContactWorkDataExtractor
-                = (PhoneContactWorkDataExtractor) phoneContactExtractorProviderFactory.getExtractor(PhoneContactWorkDataExtractor.class);
+                = (PhoneContactWorkDataExtractor) phoneContactExtractorProviderFactory
+                .getExtractor(PhoneContactWorkDataExtractor.class, PhoneContactWorkDataMapper.class);
 
         PhoneContactWorkData phoneContactWorkData = phoneContactWorkDataExtractor.extract(rawId);
 
@@ -51,7 +67,8 @@ public class PhoneContactExtractorMain {
         PhoneContactEmailDataExtractor phoneContactEmailDataExtractor
                 = (PhoneContactEmailDataExtractor)
                 phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactEmailDataExtractor.class);
+                        .getExtractor(PhoneContactEmailDataExtractor.class,
+                                PhoneContactEmailMapper.class);
 
         phoneContactCompleteObject.setPhoneContactEmailDataList(
                 phoneContactEmailDataExtractor.extract(rawId)
@@ -61,7 +78,8 @@ public class PhoneContactExtractorMain {
         PhoneContactPhoneDataExtractor phoneContactPhoneDataExtractor
                 = (PhoneContactPhoneDataExtractor)
                 phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactPhoneDataExtractor.class);
+                        .getExtractor(PhoneContactPhoneDataExtractor.class,
+                                PhoneContactPhoneMapper.class);
 
 
         phoneContactCompleteObject.setPhoneContactPhoneDataList(
@@ -73,7 +91,8 @@ public class PhoneContactExtractorMain {
         PhoneContactWebDataExtractor phoneContactWebDataExtractor
                 = (PhoneContactWebDataExtractor)
                 phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactWebDataExtractor.class);
+                        .getExtractor(PhoneContactWebDataExtractor.class,
+                                PhoneContactWebMapper.class);
 
         phoneContactCompleteObject.setPhoneContactWebDataList(
                 phoneContactWebDataExtractor.extract(rawId)
@@ -101,7 +120,8 @@ public class PhoneContactExtractorMain {
         PhoneContactNoteDataExtractor phoneContactNoteDataExtractor
                 = (PhoneContactNoteDataExtractor)
                 phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactNoteDataExtractor.class);
+                        .getExtractor(PhoneContactNoteDataExtractor.class,
+                                PhoneContactNoteMapper.class);
 
         phoneContactCompleteObject.setPhoneContactNoteDataList(
                 phoneContactNoteDataExtractor.extract(rawId)
@@ -111,7 +131,8 @@ public class PhoneContactExtractorMain {
         PhoneContactAddressDataExtractor phoneContactAddressDataExtractor
                 = (PhoneContactAddressDataExtractor)
                 phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactAddressDataExtractor.class);
+                        .getExtractor(PhoneContactAddressDataExtractor.class,
+                                PhoneContactAddressMapper.class);
 
 
         phoneContactCompleteObject.setPhoneContactAddressDataList(

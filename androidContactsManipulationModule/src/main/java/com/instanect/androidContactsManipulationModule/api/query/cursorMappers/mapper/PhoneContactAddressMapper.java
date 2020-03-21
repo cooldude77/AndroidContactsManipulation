@@ -1,48 +1,37 @@
-package com.instanect.androidContactsManipulationModule.api.query.extractors;
+package com.instanect.androidContactsManipulationModule.api.query.cursorMappers.mapper;
 
-
-import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
-import com.instanect.androidContactsManipulationModule.api.query.extractors.interfaces.PhoneContactArrayListDataExtractorInterface;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.interfaces.PhoneContactMapperArrayListInterface;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.interfaces.PhoneContactMapperInterface;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactArrayListSegmentProvider;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 import com.instanect.androidContactsManipulationModule.structs.address.PhoneContactAddressData;
 
 import java.util.ArrayList;
 
-public class PhoneContactAddressDataExtractor implements PhoneContactArrayListDataExtractorInterface {
-
+public class PhoneContactAddressMapper implements PhoneContactMapperArrayListInterface {
 
     private PhoneContactSegmentProvider phoneContactSegmentProvider;
     private PhoneContactArrayListSegmentProvider phoneContactArrayListSegmentProvider;
-    private ContentResolver contentResolver;
 
-    public PhoneContactAddressDataExtractor(
+    public PhoneContactAddressMapper(
             PhoneContactSegmentProvider phoneContactSegmentProvider,
-            PhoneContactArrayListSegmentProvider phoneContactArrayListSegmentProvider,
-            ContentResolver contentResolver) {
-        this.phoneContactSegmentProvider = phoneContactSegmentProvider;
+            PhoneContactArrayListSegmentProvider phoneContactArrayListSegmentProvider) {
 
+        this.phoneContactSegmentProvider = phoneContactSegmentProvider;
         this.phoneContactArrayListSegmentProvider = phoneContactArrayListSegmentProvider;
-        this.contentResolver = contentResolver;
     }
 
-    public ArrayList<PhoneContactAddressData> extract(int id) {
-
-        ArrayList<PhoneContactAddressData> phoneContactAddressDataArrayList = phoneContactArrayListSegmentProvider
-                .newInstance(PhoneContactAddressData.class);
-
-        //Get Postal Address....
-
-        String whereCond = ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
-        String[] whereParams = new String[]{String.valueOf(id), ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE};
-
-        Cursor cursor = contentResolver.query(ContactsContract.Data.CONTENT_URI, null, whereCond, whereParams, null);
+    public ArrayList<PhoneContactAddressData> map(Cursor cursor) {
+        ArrayList<PhoneContactAddressData> phoneContactAddressDataArrayList
+                = phoneContactArrayListSegmentProvider.newInstance(PhoneContactAddressData.class);
 
         if (cursor != null) {
-            while (cursor.moveToNext()) {
+            cursor.moveToFirst();
+
+            do {
                 PhoneContactAddressData phoneContactAddressData = (PhoneContactAddressData)
                         phoneContactSegmentProvider.newInstance(PhoneContactAddressData.class);
                 int addressContactId = Integer.parseInt(cursor.getString(
@@ -74,10 +63,11 @@ public class PhoneContactAddressDataExtractor implements PhoneContactArrayListDa
                 phoneContactAddressData.setType(Integer.valueOf(type));
 
                 phoneContactAddressDataArrayList.add(phoneContactAddressData);
-            }
+            } while (cursor.moveToNext());
             cursor.close();
-        }
 
-        return phoneContactAddressDataArrayList;
+            return phoneContactAddressDataArrayList;
+        }
+        return null;
     }
 }

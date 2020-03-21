@@ -6,7 +6,7 @@ import com.instanect.androidContactsManipulationModule.api.insert.PhoneContactIn
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactCursor;
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactObjectProvider;
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactReader;
-import com.instanect.androidContactsManipulationModule.api.query.extractors.PhoneContactExtractorMain;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.main.PhoneContactExtractorMain;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorIntoArrayListProviderFactory;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorProviderFactory;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactArrayListSegmentProvider;

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
-import com.instanect.androidContactsManipulationModule.api.query.extractors.PhoneContactExtractorMain;
+import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.main.PhoneContactExtractorMain;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
 import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
