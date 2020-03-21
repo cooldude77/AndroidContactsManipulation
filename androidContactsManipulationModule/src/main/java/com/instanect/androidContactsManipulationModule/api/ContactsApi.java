@@ -55,8 +55,7 @@ public class ContactsApi {
     }
 
     public ArrayList<PhoneContactUserData> getOnlyUserDataForAllContactsByAccountName(
-            PhoneContactAccountType phoneContactAccountType
-    ) {
+            PhoneContactAccountType phoneContactAccountType) {
 
         return phoneContactReader.getAllUserDataForAccount(phoneContactAccountType);
     }
