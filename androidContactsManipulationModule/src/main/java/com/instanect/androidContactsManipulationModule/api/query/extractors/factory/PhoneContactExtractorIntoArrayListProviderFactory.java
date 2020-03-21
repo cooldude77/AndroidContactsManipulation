@@ -35,17 +35,16 @@ public class PhoneContactExtractorIntoArrayListProviderFactory {
         PhoneContactMapperArrayListInterface
                 phoneContactMapperArrayListInterface
                 = phoneContactMapperIntoArrayListProviderFactory.getMapper(
-                mapperClass
+                        mapperClass
         );
 
         Class[] cArg = new Class[2];
-        cArg[0] = mapperClass.getClass();
-        cArg[1] = PhoneContactArrayListSegmentProvider.class;
+        cArg[0] = phoneContactMapperArrayListInterface.getClass();
+        cArg[1] = ContentResolver.class;
 
         try {
             return extractorClass.getDeclaredConstructor(cArg).newInstance(
-                    phoneContactMapperArrayListInterface,
-                    contentResolver);
+               phoneContactMapperArrayListInterface,     contentResolver);
         } catch (Exception e) {
             throw new AssertionError(e);
         }

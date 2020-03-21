@@ -6,6 +6,8 @@ import com.instanect.androidContactsManipulationModule.api.insert.PhoneContactIn
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactCursor;
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactObjectProvider;
 import com.instanect.androidContactsManipulationModule.api.query.PhoneContactReader;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.factory.PhoneContactMapperIntoArrayListProviderFactory;
+import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.factory.PhoneContactMapperProviderFactory;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.extractor.main.PhoneContactExtractorMain;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorIntoArrayListProviderFactory;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorProviderFactory;
@@ -22,12 +24,19 @@ public class ContactsApiProvider {
                         new PhoneContactExtractorMain(
                                 new PhoneContactObjectProvider(),
                                 new PhoneContactExtractorProviderFactory(
-                                        new PhoneContactSegmentProvider(),
+                                        new PhoneContactMapperProviderFactory(
+                                                new PhoneContactSegmentProvider()
+                                        ),
                                         context.getContentResolver()
                                 ),
                                 new PhoneContactExtractorIntoArrayListProviderFactory(
-                                        new PhoneContactSegmentProvider(),
-                                        new PhoneContactArrayListSegmentProvider(),
+                                        new PhoneContactMapperProviderFactory(
+                                                new PhoneContactSegmentProvider()
+                                        ),
+                                        new PhoneContactMapperIntoArrayListProviderFactory(
+                                                new PhoneContactSegmentProvider(),
+                                                new PhoneContactArrayListSegmentProvider()
+                                        ),
                                         context.getContentResolver()
                                 )
                         ),

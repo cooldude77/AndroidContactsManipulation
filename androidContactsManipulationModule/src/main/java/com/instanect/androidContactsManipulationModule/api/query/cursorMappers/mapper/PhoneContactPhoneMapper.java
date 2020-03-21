@@ -27,7 +27,7 @@ public class PhoneContactPhoneMapper implements PhoneContactMapperArrayListInter
         ArrayList<PhoneContactPhoneData> phoneContactPhoneDataArrayList
                 = phoneContactArrayListSegmentProvider.newInstance(PhoneContactPhoneData.class);
 
-        if (cursor != null) {
+        if (cursor != null&& cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 PhoneContactPhoneData phoneContactPhoneData =
                         (PhoneContactPhoneData) phoneContactSegmentProvider.newInstance(PhoneContactPhoneData.class);
