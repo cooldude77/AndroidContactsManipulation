@@ -46,30 +46,38 @@ public class PhoneContactReader {
 
     public ArrayList<PhoneContactUserData> getAllUserDataForAccount(
             PhoneContactAccountType phoneContactAccountType) {
-        String whereName = ContactsContract.Data.MIMETYPE + " = ? AND "
-                + ContactsContract.RawContacts.ACCOUNT_TYPE + " = ? AND "
+        String whereName = ContactsContract.RawContacts.ACCOUNT_TYPE + " = ? AND "
                 + ContactsContract.RawContacts.ACCOUNT_NAME + " = ?";
         String[] whereNameParams = new String[]{
-                ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE,
                 phoneContactAccountType.getAccountType(),
                 phoneContactAccountType.getAccountName()};
 
 
         Cursor cursor = context.getContentResolver()
                 .query(
-                        ContactsContract.Data.CONTENT_URI,
+                        ContactsContract.RawContacts.CONTENT_URI,
                         null,
                         whereName,
                         whereNameParams,
                         null
                 );
+        ArrayList<PhoneContactUserData> phoneContactUserDataArrayList = new ArrayList<>();
 
-        if (cursor != null && cursor.getCount() > 0) {
+        if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
 
+            do {
+                PhoneContactUserData phoneContactUserData = phoneContactExtractorMain
+                        .getUserDataByContactRawId(cursor.getInt(cursor.getColumnIndex(
+                                ContactsContract.RawContacts._ID))
+                        );
+                if (phoneContactUserData != null)
+                    phoneContactUserDataArrayList.add(phoneContactUserData);
+
+            } while (cursor.moveToNext());
 
             cursor.close();
         }
 
-        return null;
+        return phoneContactUserDataArrayList;
     }
 }

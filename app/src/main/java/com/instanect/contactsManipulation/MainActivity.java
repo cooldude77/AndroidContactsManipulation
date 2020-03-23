@@ -49,14 +49,18 @@ public class MainActivity extends AppCompatActivity {
 
     @NeedsPermission({Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS})
     void showCamera() {
-        // insertOps();
+
         // PhoneContactCompleteObject name = contactsApi.getComplete(628);
 
 
         PhoneContactAccountType phoneContactAccountType = new PhoneContactAccountType();
-        phoneContactAccountType.setAccountType("instanect.com");
+        phoneContactAccountType.setAccountType("test.com");
         phoneContactAccountType.setAccountName("test");
-        contactsApi.getOnlyUserDataForAllContactsByAccountName(phoneContactAccountType);
+        ArrayList<PhoneContactUserData> userDataArrayList
+                = contactsApi.getOnlyUserDataForAllContactsByAccountName(phoneContactAccountType);
+
+
+
     }
 
 
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         phoneContactCompleteObjects.add(p2);
         ArrayList<ContentProviderResult[]> cp = contactsApi.addContact(phoneContactCompleteObjects);
 
-        Toast.makeText(this, "Contact with name :   added", Toast.LENGTH_LONG);
+        Toast.makeText(this, "Contact with name :   added", Toast.LENGTH_LONG).show();
     }
 
     private PhoneContactCompleteObject generate() {
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         PhoneContactAccountType phoneContactAccountType = new PhoneContactAccountType();
 
         phoneContactAccountType.setAccountName("test");
-        phoneContactAccountType.setAccountType("instanect.com");
+        phoneContactAccountType.setAccountType("test.com");
 
 
         PhoneContactUserData phoneContactUserData = new PhoneContactUserData();

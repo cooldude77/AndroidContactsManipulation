@@ -22,8 +22,15 @@ import com.instanect.androidContactsManipulationModule.api.query.extractors.extr
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorIntoArrayListProviderFactory;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.factory.PhoneContactExtractorProviderFactory;
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
+import com.instanect.androidContactsManipulationModule.structs.address.PhoneContactAddressData;
+import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
+import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactPhoneData;
+import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactWebData;
+import com.instanect.androidContactsManipulationModule.structs.notes.PhoneContactNoteData;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
 import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
+
+import java.util.ArrayList;
 
 public class PhoneContactExtractorMain {
 
@@ -45,58 +52,13 @@ public class PhoneContactExtractorMain {
         int rawId = Integer.parseInt(cursor
                 .getString(cursor.getColumnIndex(ContactsContract.Contacts._ID)));
 
-        // name and others
-        PhoneContactUserDataExtractor phoneContactUserDataExtractor
-                = (PhoneContactUserDataExtractor) phoneContactExtractorProviderFactory
-                .getExtractor(PhoneContactUserDataExtractor.class, PhoneContactUserDataMapper.class);
-
-        PhoneContactUserData phoneContactUserData = phoneContactUserDataExtractor.extract(rawId);
-
-        phoneContactCompleteObject.setPhoneContactNameData(phoneContactUserData);
-
-        // work
-        PhoneContactWorkDataExtractor phoneContactWorkDataExtractor
-                = (PhoneContactWorkDataExtractor) phoneContactExtractorProviderFactory
-                .getExtractor(PhoneContactWorkDataExtractor.class, PhoneContactWorkDataMapper.class);
-
-        PhoneContactWorkData phoneContactWorkData = phoneContactWorkDataExtractor.extract(rawId);
-
-        phoneContactCompleteObject.setPhoneContactWorkData(phoneContactWorkData);
-
-        // email
-        PhoneContactEmailDataExtractor phoneContactEmailDataExtractor
-                = (PhoneContactEmailDataExtractor)
-                phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactEmailDataExtractor.class,
-                                PhoneContactEmailMapper.class);
-
-        phoneContactCompleteObject.setPhoneContactEmailDataList(
-                phoneContactEmailDataExtractor.extract(rawId)
-        );
-
-        // phone
-        PhoneContactPhoneDataExtractor phoneContactPhoneDataExtractor
-                = (PhoneContactPhoneDataExtractor)
-                phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactPhoneDataExtractor.class,
-                                PhoneContactPhoneMapper.class);
-
-
-        phoneContactCompleteObject.setPhoneContactPhoneDataList(
-                phoneContactPhoneDataExtractor.extract(rawId)
-        );
-
-
-        // web
-        PhoneContactWebDataExtractor phoneContactWebDataExtractor
-                = (PhoneContactWebDataExtractor)
-                phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactWebDataExtractor.class,
-                                PhoneContactWebMapper.class);
-
-        phoneContactCompleteObject.setPhoneContactWebDataList(
-                phoneContactWebDataExtractor.extract(rawId)
-        );
+        phoneContactCompleteObject.setPhoneContactNameData(getUserDataByContactRawId(rawId));
+        phoneContactCompleteObject.setPhoneContactWorkData(getWorkDataByContactRawId(rawId));
+        phoneContactCompleteObject.setPhoneContactEmailDataList(getEmailDataByContactRawId(rawId));
+        phoneContactCompleteObject.setPhoneContactPhoneDataList(getPhoneDataByContactRawId(rawId));
+        phoneContactCompleteObject.setPhoneContactWebDataList(getWebDataByContactRawId(rawId));
+        phoneContactCompleteObject.setPhoneContactNoteDataList(getNoteDataByContactRawId(rawId));
+        phoneContactCompleteObject.setPhoneContactAddressDataList(getAddressDataByContactRawId(rawId));
 
                     /*
 
@@ -116,6 +78,35 @@ public class PhoneContactExtractorMain {
                     imCur.close();
                 */
 
+
+        return phoneContactCompleteObject;
+
+    }
+
+    private ArrayList<PhoneContactWebData> getWebDataByContactRawId(int rawId) {
+        // web
+        PhoneContactWebDataExtractor phoneContactWebDataExtractor
+                = (PhoneContactWebDataExtractor)
+                phoneContactExtractorIntoArrayListProviderFactory
+                        .getExtractor(PhoneContactWebDataExtractor.class,
+                                PhoneContactWebMapper.class);
+
+
+        return phoneContactWebDataExtractor.extract(rawId);
+    }
+
+    private ArrayList<PhoneContactAddressData> getAddressDataByContactRawId(int rawId) {
+        PhoneContactAddressDataExtractor phoneContactAddressDataExtractor
+                = (PhoneContactAddressDataExtractor)
+                phoneContactExtractorIntoArrayListProviderFactory
+                        .getExtractor(PhoneContactAddressDataExtractor.class,
+                                PhoneContactAddressMapper.class);
+
+        return phoneContactAddressDataExtractor.extract(rawId);
+    }
+
+    private ArrayList<PhoneContactNoteData> getNoteDataByContactRawId(int rawId) {
+
         // note
         PhoneContactNoteDataExtractor phoneContactNoteDataExtractor
                 = (PhoneContactNoteDataExtractor)
@@ -123,24 +114,53 @@ public class PhoneContactExtractorMain {
                         .getExtractor(PhoneContactNoteDataExtractor.class,
                                 PhoneContactNoteMapper.class);
 
-        phoneContactCompleteObject.setPhoneContactNoteDataList(
-                phoneContactNoteDataExtractor.extract(rawId)
-        );
+        return phoneContactNoteDataExtractor.extract(rawId);
+    }
 
-        // address
-        PhoneContactAddressDataExtractor phoneContactAddressDataExtractor
-                = (PhoneContactAddressDataExtractor)
+    private ArrayList<PhoneContactPhoneData> getPhoneDataByContactRawId(int rawId) {
+
+        // phone
+        PhoneContactPhoneDataExtractor phoneContactPhoneDataExtractor
+                = (PhoneContactPhoneDataExtractor)
                 phoneContactExtractorIntoArrayListProviderFactory
-                        .getExtractor(PhoneContactAddressDataExtractor.class,
-                                PhoneContactAddressMapper.class);
+                        .getExtractor(PhoneContactPhoneDataExtractor.class,
+                                PhoneContactPhoneMapper.class);
+
+        return phoneContactPhoneDataExtractor.extract(rawId);
+    }
+
+    private ArrayList<PhoneContactEmailData> getEmailDataByContactRawId(int rawId) {
+
+        // email
+        PhoneContactEmailDataExtractor phoneContactEmailDataExtractor
+                = (PhoneContactEmailDataExtractor)
+                phoneContactExtractorIntoArrayListProviderFactory
+                        .getExtractor(PhoneContactEmailDataExtractor.class,
+                                PhoneContactEmailMapper.class);
+
+        return phoneContactEmailDataExtractor.extract(rawId);
+
+    }
+
+    private PhoneContactWorkData getWorkDataByContactRawId(int rawId) {
+        // work
+        PhoneContactWorkDataExtractor phoneContactWorkDataExtractor
+                = (PhoneContactWorkDataExtractor) phoneContactExtractorProviderFactory
+                .getExtractor(PhoneContactWorkDataExtractor.class, PhoneContactWorkDataMapper.class);
+
+        return phoneContactWorkDataExtractor.extract(rawId);
+
+    }
+
+    public PhoneContactUserData getUserDataByContactRawId(int rawId) {
 
 
-        phoneContactCompleteObject.setPhoneContactAddressDataList(
-                phoneContactAddressDataExtractor.extract(rawId)
-        );
+        // name and others
+        PhoneContactUserDataExtractor phoneContactUserDataExtractor
+                = (PhoneContactUserDataExtractor) phoneContactExtractorProviderFactory
+                .getExtractor(PhoneContactUserDataExtractor.class, PhoneContactUserDataMapper.class);
 
-
-        return phoneContactCompleteObject;
+        return phoneContactUserDataExtractor.extract(rawId);
 
     }
 }
