@@ -50,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS})
     void showCamera() {
 
-        // PhoneContactCompleteObject name = contactsApi.getComplete(628);
+        PhoneContactCompleteObject name = contactsApi.getComplete(631);
 
 
         PhoneContactAccountType phoneContactAccountType = new PhoneContactAccountType();
         phoneContactAccountType.setAccountType("test.com");
         phoneContactAccountType.setAccountName("test");
-        ArrayList<PhoneContactUserData> userDataArrayList
-                = contactsApi.getOnlyUserDataForAllContactsByAccountName(phoneContactAccountType);
+        // ArrayList<PhoneContactUserData> userDataArrayList
+           //     = contactsApi.getOnlyUserDataForAllContactsByAccountName(phoneContactAccountType);
 
 
 

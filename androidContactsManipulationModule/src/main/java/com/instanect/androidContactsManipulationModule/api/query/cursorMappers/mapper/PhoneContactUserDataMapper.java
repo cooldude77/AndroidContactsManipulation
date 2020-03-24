@@ -5,7 +5,6 @@ import android.provider.ContactsContract;
 
 import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.interfaces.PhoneContactMapperInterface;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
-import com.instanect.androidContactsManipulationModule.api.query.interfaces.PhoneContactSegmentInterface;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
 
 public class PhoneContactUserDataMapper implements PhoneContactMapperInterface {
@@ -19,6 +18,8 @@ public class PhoneContactUserDataMapper implements PhoneContactMapperInterface {
     public PhoneContactUserData map(Cursor cursor) {
 
         PhoneContactUserData phoneContactUserData = (PhoneContactUserData) phoneContactSegmentProvider.newInstance(PhoneContactUserData.class);
+
+        int raw_contact_id = cursor.getInt(cursor.getColumnIndex("raw_contact_id"));
 
         phoneContactUserData.setId(
                 cursor.getInt(cursor.getColumnIndex(
