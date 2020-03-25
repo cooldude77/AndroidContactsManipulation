@@ -25,6 +25,8 @@ import org.fluttercode.datafactory.impl.DataFactory;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -35,6 +37,9 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity {
 
+    @Inject
+    ContactsApiProvider contactsApiProvider;
+
     ContactsApi contactsApi;
 
     @Override
@@ -42,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        contactsApi = new ContactsApiProvider().newInstance(this);
+        DaggerAppComponent.create().inject(this);
+
+        contactsApi = contactsApiProvider.newInstance(this);
 
         MainActivityPermissionsDispatcher.showCameraWithPermissionCheck(this);
     }
@@ -57,8 +64,7 @@ public class MainActivity extends AppCompatActivity {
         phoneContactAccountType.setAccountType("test.com");
         phoneContactAccountType.setAccountName("test");
         // ArrayList<PhoneContactUserData> userDataArrayList
-           //     = contactsApi.getOnlyUserDataForAllContactsByAccountName(phoneContactAccountType);
-
+        //     = contactsApi.getOnlyUserDataForAllContactsByAccountName(phoneContactAccountType);
 
 
     }
