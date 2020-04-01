@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 
 import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.interfaces.PhoneContactMapperArrayListInterface;
-import com.instanect.androidContactsManipulationModule.api.query.cursorMappers.interfaces.PhoneContactMapperInterface;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactArrayListSegmentProvider;
 import com.instanect.androidContactsManipulationModule.api.query.extractors.provider.PhoneContactSegmentProvider;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
@@ -44,7 +43,7 @@ public class PhoneContactEmailMapper implements PhoneContactMapperArrayListInter
                 int emailType = Integer.parseInt(cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE)));
 
-                phoneContactEmailData.setId(emailRawId);
+                phoneContactEmailData.setRawId(emailRawId);
                 phoneContactEmailData.setEmail(email);
                 phoneContactEmailData.setEmailType(emailType);
 

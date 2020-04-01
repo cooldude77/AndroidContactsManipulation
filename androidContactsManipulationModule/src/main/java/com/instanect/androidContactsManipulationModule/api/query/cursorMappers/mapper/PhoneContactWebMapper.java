@@ -44,8 +44,7 @@ public class PhoneContactWebMapper implements PhoneContactMapperArrayListInterfa
                 int urlType = Integer.parseInt(cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.Website.TYPE)));
 
-                phoneContactWebData.setId(webContactId);
-                phoneContactWebData.setIdAndroid(webContactId);
+                phoneContactWebData.setRawId(webContactId);
                 phoneContactWebData.setUrl(url);
                 phoneContactWebData.setUrlType(urlType);
             } while (cursor.moveToNext());

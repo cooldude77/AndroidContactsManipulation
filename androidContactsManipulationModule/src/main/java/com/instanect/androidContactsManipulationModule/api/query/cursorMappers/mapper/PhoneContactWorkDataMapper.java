@@ -26,7 +26,7 @@ public class PhoneContactWorkDataMapper implements PhoneContactMapperInterface {
         String title = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.TITLE));
         String department = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.DEPARTMENT));
 
-        phoneContactWorkData.setId(
+        phoneContactWorkData.setRawId(
                 cursor.getInt(cursor.getColumnIndex(
                         ContactsContract.CommonDataKinds.Organization._ID))
 

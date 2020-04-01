@@ -52,7 +52,7 @@ public class PhoneContactAddressMapper implements PhoneContactMapperArrayListInt
                 String type = cursor.getString(
                         cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.TYPE));
 
-                phoneContactAddressData.setId(addressContactId);
+                phoneContactAddressData.setRawId(addressContactId);
                 phoneContactAddressData.setPostalCode(postalCode);
                 phoneContactAddressData.setPoBox(poBox);
                 phoneContactAddressData.setCountry(country);

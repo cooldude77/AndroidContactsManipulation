@@ -21,7 +21,7 @@ public class PhoneContactUserDataMapper implements PhoneContactMapperInterface {
 
         int raw_contact_id = cursor.getInt(cursor.getColumnIndex("raw_contact_id"));
 
-        phoneContactUserData.setId(
+        phoneContactUserData.setRawId(
                 cursor.getInt(cursor.getColumnIndex(
                         ContactsContract.CommonDataKinds.StructuredName._ID))
 
