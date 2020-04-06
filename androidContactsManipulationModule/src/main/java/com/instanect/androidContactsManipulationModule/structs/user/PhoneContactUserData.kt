@@ -13,5 +13,5 @@ class PhoneContactUserData : PhoneContactSegmentInterface {
     var prefix: String? = null
     var suffix: String? = null
     var rawId = -1
-
+    var photoUri: Uri? = null
 }
