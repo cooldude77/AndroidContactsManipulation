@@ -4,12 +4,12 @@ import com.instanect.androidContactsManipulationModule.api.query.interfaces.Phon
 
 class PhoneContactAddressData : PhoneContactSegmentInterface {
     var rawId: Int = -1
-    var region: String? = null
-    var city: String? = null
-    var country: String? = null
-    var state: String? = null
-    var postalCode: String? = null
-    var poBox: String? = null
-    var street: String? = null
+    var region: String? = ""
+    var city: String? =  ""
+    var country: String? = ""
+    var state: String? = ""
+    var postalCode: String? = ""
+    var poBox: String? = ""
+    var street: String? = ""
     var type: Int? = 0
 }

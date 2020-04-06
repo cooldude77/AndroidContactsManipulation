@@ -6,12 +6,12 @@ import com.instanect.androidContactsManipulationModule.api.query.interfaces.Phon
 
 class PhoneContactUserData : PhoneContactSegmentInterface {
 
-    var displayName: String? = null
-    var firstName: String? = null
-    var middleName: String? = null
-    var lastName: String? = null
-    var prefix: String? = null
-    var suffix: String? = null
+    var displayName: String? = ""
+    var firstName: String? = ""
+    var middleName: String? = ""
+    var lastName: String? = ""
+    var prefix: String? = ""
+    var suffix: String? = ""
     var rawId = -1
     var photoUri: Uri? = null
 }

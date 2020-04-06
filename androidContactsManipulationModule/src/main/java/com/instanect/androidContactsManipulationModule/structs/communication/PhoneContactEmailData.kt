@@ -5,6 +5,6 @@ import com.instanect.androidContactsManipulationModule.api.query.interfaces.Phon
 class PhoneContactEmailData : PhoneContactSegmentInterface {
 
     var rawId: Int = -1
-    var email: String? = null
+    var email: String? = ""
     var emailType: Int = 0
 }

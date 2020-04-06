@@ -4,6 +4,6 @@ import com.instanect.androidContactsManipulationModule.api.query.interfaces.Phon
 
 class PhoneContactWebData : PhoneContactSegmentInterface {
     var rawId: Int = -1
-    var url: String? = null
+    var url: String? = ""
     var urlType: Int = 0
 }
