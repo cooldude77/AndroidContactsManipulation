@@ -11,5 +11,6 @@ class PhoneContactAddressData : PhoneContactSegmentInterface {
     var postalCode: String? = ""
     var poBox: String? = ""
     var street: String? = ""
-    var type: Int? = 0
+    var addressType: Int? = 0
+
 }

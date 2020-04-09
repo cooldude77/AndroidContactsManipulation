@@ -59,7 +59,7 @@ public class PhoneContactAddressMapper implements PhoneContactMapperArrayListInt
                 phoneContactAddressData.setStreet(street);
                 phoneContactAddressData.setRegion(region);
                 phoneContactAddressData.setCity(city);
-                phoneContactAddressData.setType(Integer.valueOf(type));
+                phoneContactAddressData.setAddressType(Integer.valueOf(type));
 
                 phoneContactAddressDataArrayList.add(phoneContactAddressData);
             } while (cursor.moveToNext());
