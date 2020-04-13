@@ -9,8 +9,11 @@ import android.provider.ContactsContract;
 
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
 import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
+import com.instanect.androidContactsManipulationModule.structs.address.PhoneContactAddressData;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactEmailData;
 import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactPhoneData;
+import com.instanect.androidContactsManipulationModule.structs.communication.PhoneContactWebData;
+import com.instanect.androidContactsManipulationModule.structs.notes.PhoneContactNoteData;
 import com.instanect.androidContactsManipulationModule.structs.user.PhoneContactUserData;
 import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData;
 
@@ -41,7 +44,13 @@ public class PhoneContactInsert {
 
         addEmailData(phoneContactCompleteObject.getPhoneContactEmailDataList());
         addPhoneData(phoneContactCompleteObject.getPhoneContactPhoneDataList());
+        addWebData(phoneContactCompleteObject.getPhoneContactWebDataList());
 
+        addNoteData(phoneContactCompleteObject.getPhoneContactNoteDataList());
+
+        addAddressData(phoneContactCompleteObject.getPhoneContactAddressDataList());
+
+        // return null;
         return apply();
 
     }
@@ -92,6 +101,8 @@ public class PhoneContactInsert {
                 ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
                 .withValue(ContactsContract.CommonDataKinds.Organization.COMPANY,
                         phoneContactWorkData.getCompany())
+                .withValue(ContactsContract.CommonDataKinds.Organization.DEPARTMENT,
+                        phoneContactWorkData.getDepartment())
                 .withValue(ContactsContract.CommonDataKinds.Organization.TITLE,
                         phoneContactWorkData.getJobTitle());
     }
@@ -125,7 +136,7 @@ public class PhoneContactInsert {
                     .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER,
                             phoneContactPhoneData.getPhoneNumber())
                     .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
-                            ContactsContract.CommonDataKinds.Phone.TYPE_WORK)
+                            phoneContactPhoneData.getPhoneType())
                     .build());
         }
     }
@@ -140,11 +151,67 @@ public class PhoneContactInsert {
                     .withValue(ContactsContract.CommonDataKinds.Email.DATA,
                             phoneContactEmailData.getEmail())
                     .withValue(ContactsContract.CommonDataKinds.Email.TYPE,
-                            ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                            phoneContactEmailData.getEmailType())
                     .build());
         }
 
     }
+
+
+    private void addAddressData(ArrayList<PhoneContactAddressData> phoneContactAddressDataList) {
+        for (PhoneContactAddressData phoneContactAddressData : phoneContactAddressDataList) {
+
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.STREET,
+                            phoneContactAddressData.getStreet())
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POBOX,
+                            phoneContactAddressData.getPoBox())
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.CITY,
+                            phoneContactAddressData.getCity())
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.REGION,
+                            phoneContactAddressData.getState())
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY,
+                            phoneContactAddressData.getCountry())
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE,
+                            phoneContactAddressData.getPostalCode())
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.TYPE,
+                            phoneContactAddressData.getAddressType())
+                    .build());
+        }
+
+    }
+
+    private void addNoteData(ArrayList<PhoneContactNoteData> phoneContactNoteDataList) {
+
+        for (PhoneContactNoteData phoneContactNoteData : phoneContactNoteDataList)
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Note.NOTE,
+                            phoneContactNoteData.getNote())
+                    .build());
+    }
+
+    private void addWebData(ArrayList<PhoneContactWebData> phoneContactWebDataList) {
+        for (PhoneContactWebData phoneContactWebData : phoneContactWebDataList) {
+
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.Website.DATA,
+                            phoneContactWebData.getUrl())
+                    .withValue(ContactsContract.CommonDataKinds.Website.TYPE,
+                            phoneContactWebData.getUrlType())
+                    .build());
+        }
+
+    }
+
 
     public ArrayList<ContentProviderResult[]> addContactMultiple(
             ArrayList<PhoneContactCompleteObject> phoneContactCompleteObjects) {
