@@ -7,6 +7,8 @@ import android.content.OperationApplicationException;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 
+import androidx.annotation.NonNull;
+
 import com.instanect.androidContactsManipulationModule.structs.PhoneContactCompleteObject;
 import com.instanect.androidContactsManipulationModule.structs.accountType.PhoneContactAccountType;
 import com.instanect.androidContactsManipulationModule.structs.address.PhoneContactAddressData;
@@ -68,7 +70,10 @@ public class PhoneContactInsert {
         return new ContentProviderResult[0];
     }
 
-    private void setAccountType(PhoneContactAccountType phoneContactAccountType) {
+    private void setAccountType(@NonNull PhoneContactAccountType phoneContactAccountType) {
+
+
+
         ops.add(ContentProviderOperation
                 .newInsert(ContactsContract.RawContacts.CONTENT_URI)
                 .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE,

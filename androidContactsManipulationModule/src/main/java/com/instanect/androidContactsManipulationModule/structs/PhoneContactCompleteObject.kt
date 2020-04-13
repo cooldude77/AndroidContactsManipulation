@@ -10,7 +10,7 @@ import com.instanect.androidContactsManipulationModule.structs.user.PhoneContact
 import com.instanect.androidContactsManipulationModule.structs.work.PhoneContactWorkData
 
 class PhoneContactCompleteObject {
-    var phoneContactAccountType: PhoneContactAccountType? = null
+    var phoneContactAccountType: PhoneContactAccountType? = PhoneContactAccountType()
     var phoneContactNameData = PhoneContactUserData()
     var phoneContactWorkData = PhoneContactWorkData()
     var phoneContactPhoneDataList: ArrayList<PhoneContactPhoneData>? = ArrayList()
