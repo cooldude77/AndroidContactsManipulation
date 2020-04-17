@@ -32,7 +32,7 @@ public class PhoneContactAddressDataExtractor implements PhoneContactArrayListDa
 
         //Get Postal Address....
 
-        String whereCond = ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
+        String whereCond = ContactsContract.Data.RAW_CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
         String[] whereParams = new String[]{String.valueOf(id), ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE};
 
         Cursor cursor = contentResolver.query(ContactsContract.Data.CONTENT_URI, null, whereCond, whereParams, null);

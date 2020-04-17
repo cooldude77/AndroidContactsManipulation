@@ -15,11 +15,14 @@ public class PhoneContactUserDataMapper implements PhoneContactMapperInterface {
         this.phoneContactSegmentProvider = phoneContactSegmentProvider;
     }
 
+    @Override
     public PhoneContactUserData map(Cursor cursor) {
 
         PhoneContactUserData phoneContactUserData = (PhoneContactUserData) phoneContactSegmentProvider.newInstance(PhoneContactUserData.class);
 
         int raw_contact_id = cursor.getInt(cursor.getColumnIndex("raw_contact_id"));
+
+        phoneContactUserData.setRawContactId(raw_contact_id);
 
         phoneContactUserData.setRawId(
                 cursor.getInt(cursor.getColumnIndex(

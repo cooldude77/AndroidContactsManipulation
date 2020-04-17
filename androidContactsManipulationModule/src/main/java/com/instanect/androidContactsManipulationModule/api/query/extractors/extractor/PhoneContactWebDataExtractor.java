@@ -28,8 +28,12 @@ public class PhoneContactWebDataExtractor implements PhoneContactArrayListDataEx
     public ArrayList<PhoneContactWebData> extract(int id) {
 
         // get the phone number
-        Cursor cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+        Cursor cursor = contentResolver.query(ContactsContract.Data.CONTENT_URI,
+                null,
+                ContactsContract.CommonDataKinds.Website.RAW_CONTACT_ID + " = ? AND "
+                        + ContactsContract.Data.MIMETYPE + " = " +
+                        "'" + ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE + "'"
+                ,
                 new String[]{String.valueOf(id)}, null);
         return phoneContactWebMapper.map(cursor);
     }

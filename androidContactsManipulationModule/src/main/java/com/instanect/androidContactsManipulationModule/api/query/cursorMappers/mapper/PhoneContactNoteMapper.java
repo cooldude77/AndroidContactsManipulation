@@ -43,7 +43,7 @@ public class PhoneContactNoteMapper implements PhoneContactMapperArrayListInterf
                 phoneContactNoteData.setNote(note);
                 phoneContactNoteDataArrayList.add(phoneContactNoteData);
 
-            } while (cursor.moveToFirst());
+            } while (cursor.moveToNext());
             cursor.close();
         }
 

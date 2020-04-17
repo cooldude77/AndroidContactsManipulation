@@ -47,6 +47,9 @@ public class PhoneContactWebMapper implements PhoneContactMapperArrayListInterfa
                 phoneContactWebData.setRawId(webContactId);
                 phoneContactWebData.setUrl(url);
                 phoneContactWebData.setUrlType(urlType);
+
+                phoneContactWebDataArrayList.add(phoneContactWebData);
+
             } while (cursor.moveToNext());
             cursor.close();
         }
